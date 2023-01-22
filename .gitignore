@@ -1,0 +1,26 @@
+# Environment [VisualStudioCode]
+.vscode/
+
+
+# Environment [VisualStudio2022]
+.vs/
+*.pyperf
+*.pyproj
+*.sln
+
+
+# Environment [Program]
+*.spec
+dat/LoginCache/
+doc/
+log/
+src/__pycache__/
+src/build/
+src/dist/
+
+
+# Environment [venv]
+pyvenv.cfg
+include/
+Lib/
+Scripts
