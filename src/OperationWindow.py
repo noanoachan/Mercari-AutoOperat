@@ -4,7 +4,6 @@ import tkinter.ttk as ttk
 from selenium.webdriver.edge.webdriver import WebDriver
 from enum import Enum
 import Log
-import Const
 import ExecuteFunction
 import UserInfo
 
@@ -26,11 +25,8 @@ class OperationWindow:
      @class     機能選択画面(GUI) 
     """ 
     # ログクラス
-    m_objLog: Log.Log = Log.Log();
+    LOG: Log.Log = Log.Log();
 
-    
-    # 設定ファイル名
-    objSettingFile: Const.SettingFile = Const.SettingFile();
     
     # 各機能実行関数群
     objExecuteFunction: ExecuteFunction.ExecuteFunction;
@@ -69,9 +65,9 @@ class OperationWindow:
         # 選択された機能項目
         strOpeartElement: str = self.strOpeartElement.get();
         
-        self.m_objLog.LogInfo('/////////////////////////////////////////////');
-        self.m_objLog.LogInfo(f'【{strOpeartElement}】の操作を開始します');
-        self.m_objLog.LogInfo('/////////////////////////////////////////////');
+        self.LOG.LogInfo('/////////////////////////////////////////////');
+        self.LOG.LogInfo(f'【{strOpeartElement}】の操作を開始します');
+        self.LOG.LogInfo('/////////////////////////////////////////////');
         
         # ラベル更新
         self.strLabelText.set(f'【{strOpeartElement}】 実行中...');
@@ -94,13 +90,13 @@ class OperationWindow:
             # 選択項目の完了表示（ラベル）
             self.strLabelText.set(f'{strOpeartElement}が完了しました')
             
-            self.m_objLog.LogInfo('==========================================');
-            self.m_objLog.LogInfo(f'【{strOpeartElement}】の操作が完了しました');
-            self.m_objLog.LogInfo('==========================================');
+            self.LOG.LogInfo('==========================================');
+            self.LOG.LogInfo(f'【{strOpeartElement}】の操作が完了しました');
+            self.LOG.LogInfo('==========================================');
                 
                 
         except Exception as e:
-            self.m_objLog.LogError(f'【{strOpeartElement}】の処理中にエラーが発生しました');    
+            self.LOG.LogError(f'【{strOpeartElement}】の処理中にエラーが発生しました');    
             self.strLabelText.set(f'エラーが発生しました。再度実行して下さい。');
             self.label.update();
             

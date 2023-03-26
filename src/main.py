@@ -6,8 +6,8 @@ import os
 import sys
 import UserInfo
 import Log
-import Const
 import OperationWindow
+import Common.Common;
 
 
 class Main:
@@ -15,18 +15,19 @@ class Main:
      @class     Mainクラス
     """ 
     # ログクラス
-    m_objLog: Log.Log = Log.Log();
+    LOG: Log.Log = Log.Log();
 
-    
-    # 固定値設定クラス
-    m_objSettingFile: Const.SettingFile = Const.SettingFile.staticSettingFile();
+
+    # 共通設定クラス
+    COMMON: Common.Common.Common = Common.Common.Common.staticCommon();
         
+
     # ユーザー情報クラス
-    m_objUserInfo: UserInfo.UserInfo = UserInfo.UserInfo();
+    objUserInfo: UserInfo.UserInfo = UserInfo.UserInfo();
     
     
     # WebDriver
-    m_objWebDriver: WebDriver;
+    objWebDriver: WebDriver;
     
             
     
@@ -35,10 +36,10 @@ class Main:
         @details        main関数
         """
         # ログインキャッシュの確認と再び Webへアクセスしないための制限
-        if not self.m_objUserInfo.getExistCache():
+        if not self.objUserInfo.getExistCache():
             try:
                 # ログインキャッシュの有無
-                strLoginChaceDir: str = os.path.normpath(os.path.join(self.m_objSettingFile.EXE_BASE_FILE_PATH, f'..\\dat\\{self.m_objSettingFile.FOLDER_LOGIN_CACHE}'));
+                strLoginChaceDir: str = os.path.normpath(os.path.join(self.COMMON.EXE_BASE_FILE_PATH, f'..\\dat\\{self.COMMON.FOLDER_LOGIN_CACHE}'));
                 
                 # オプション設定
                 objOptions: Options = webdriver.ChromeOptions();
@@ -47,26 +48,26 @@ class Main:
                 if not os.path.exists(strLoginChaceDir):
                     os.makedirs(strLoginChaceDir, exist_ok=True);
                     objOptions.add_argument(f'--user-data-dir={strLoginChaceDir}');    
-                    self.m_objLog.LogInfo('ログインキャッシュを生成しました');
+                    self.LOG.LogInfo('ログインキャッシュを生成しました');
                     
                 # ログインキャッシュの有無を「有」へ変更
                 else:
                     objOptions.add_argument(f'--user-data-dir={strLoginChaceDir}');
-                    self.m_objUserInfo.setExistCache(True);
-                    self.m_objLog.LogInfo('ログインキャッシュが確認できました');
+                    self.objUserInfo.setExistCache(True);
+                    self.LOG.LogInfo('ログインキャッシュが確認できました');
                     
                 
                 # 環境に応じた webdriverを自動インストール
-                self.m_objWebDriver = webdriver.Chrome(executable_path=ChromeDriverManager().install(), options=objOptions);
-                self.m_objWebDriver.implicitly_wait(15);
+                self.objWebDriver = webdriver.Chrome(executable_path=ChromeDriverManager().install(), options=objOptions);
+                self.objWebDriver.implicitly_wait(15);
                 
                 # UserInfo.xml：アカウント情報の取得
-                self.m_objUserInfo.readUserInfo();
+                self.objUserInfo.readUserInfo();
             
             
             except Exception as e:
-                self.m_objLog.LogCritical('ログインキャッシュ情報の確認中に致命的なエラーが発生しました');
-                self.m_objLog.LogCritical('続行不可能なため終了します');
+                self.LOG.LogCritical('ログインキャッシュ情報の確認中に致命的なエラーが発生しました');
+                self.LOG.LogCritical('続行不可能なため終了します');
                 
                 # 終了
                 sys.exit();
@@ -76,10 +77,10 @@ class Main:
         # self.m_objWebDriver.maximize_window();
         
         # ブラウザウィンドウサイズの指定
-        self.m_objWebDriver.set_window_size(1920, 1080)
+        self.objWebDriver.set_window_size(1920, 1080)
         
         # GUIインスタンスの生成及びメルカリログイン
-        objOperationWindow: OperationWindow.OperationWindow = OperationWindow.OperationWindow(self.m_objWebDriver, self.m_objUserInfo);
+        objOperationWindow: OperationWindow.OperationWindow = OperationWindow.OperationWindow(self.objWebDriver, self.objUserInfo);
         
         # ブラウザウィンドウサイズの最小化
         # self.m_objWebDriver.minimize_window();

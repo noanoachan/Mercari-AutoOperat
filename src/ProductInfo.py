@@ -1,10 +1,16 @@
 class Product():
     """
-     @class     商品情報
+     @class     商品情報クラス
     """
-    __m_strProductName = '';        # 商品名
-    __m_strProductId   = '';        # 商品ID
-    __m_strProductUrl  = '';        # 商品URL
+    __strProductName = '';          # 商品名
+
+
+    __strProductId   = '';          # 商品ID
+
+
+    __strProductUrl  = '';          # 商品URL
+
+
     
     def __init__(self, strProductName, strProductId, strProductUrl: str = '') ->  None:
         """
@@ -13,9 +19,11 @@ class Product():
          @param[in]     strProductId        商品ID
          @param[in]     strProductUrl       商品Url
         """
-        self.__m_strProductName   = strProductName;
-        self.__m_strProductId     = strProductId;
-        self.__m_strProductUrl     = strProductUrl;
+        self.__strProductName   = strProductName;
+        self.__strProductId     = strProductId;
+        self.__strProductUrl    = strProductUrl;
+
+
 
     #! Getter
     def getProductName(self) ->  str:
@@ -23,50 +31,57 @@ class Product():
          @detail        商品名の取得
          @return        strProductName      商品名
         """
-        return self.__m_strProductName;
+        return self.__strProductName;
 
     def getProductId(self) ->  str:
         """
          @detail        商品IDの取得
          @return        strProductID        商品ID
         """
-        return self.__m_strProductId;
+        return self.__strProductId;
     
     def getProductUrl(self) ->  str:
         """
          @detail        商品URLの取得
          @return        strProductURL       商品URL
         """
-        return self.__m_strProductUrl;
+        return self.__strProductUrl;
     
+
+
     
 class ExhibitingProduct(Product):
     """
-     @class     出品中の商品情報
+     @class     出品中の商品情報クラス
     """
-    m_blProductStopPublishing   = False;    # 公開停止
-    m_blProductDelete           = False;    # 削除
-    m_blProductSoldOut          = False;    # 売り切れ  
+    blProductStopPublishing     = False;    # 公開停止
+
+
+    blProductDelete             = False;    # 削除
+
+
+    blProductSoldOut            = False;    # 売り切れ  
     
+
     
     #! Getter
     def getProductStopPublishing(self):
         """
          @detail        公開停止ステータスの取得
         """
-        return self.m_blProductStopPublishing;
+        return self.blProductStopPublishing;
     
     def getProductDelete(self):
         """
          @detail        削除ステータスの取得
         """
-        return self.m_blProductDelete;
+        return self.blProductDelete;
     
     def getProductSoldOut(self):
         """
          @detail        売り切れ状態の取得
         """
-        return self.m_blProductSoldOut;
+        return self.blProductSoldOut;
     
     
     #! Setter
@@ -75,47 +90,51 @@ class ExhibitingProduct(Product):
          @detail        公開停止状態の設定
          @param[in]     blProductStopPublishing     公開停止状態
         """
-        self.m_blProductStopPublishing = blProductStopPublishing;
+        self.blProductStopPublishing = blProductStopPublishing;
     
     def setProductDelete(self, blProductDelete):
         """
          @detail        削除状態の設定
          @param[in]     blProductDelete             削除状態
         """
-        self.m_blProductDelete = blProductDelete;
+        self.blProductDelete = blProductDelete;
         
     def setProductSoldOut(self, blProductSoldOut):
         """
          @detail        売り切れ状態の設定
          @param[in]     blProductSoldOut            売り切れ状態
         """
-        self.m_blProductSoldOut = blProductSoldOut;
+        self.blProductSoldOut = blProductSoldOut;
     
     
     
     
 class PriceCutProduct(Product):
     """
-     @class     値下げ商品情報
+     @class     値下げ商品情報クラス
     """
     DISCOUNTED_PRICE    : int       = 100;                      # 値下げ価格（固定値：100円）
     
-    __m_nPriceCut       : int       = DISCOUNTED_PRICE;         # 値下げ価格
-    __m_nCheapestPrice  : int       = 0;                        # 最安値の設定値
+
+    __nPriceCut         : int       = DISCOUNTED_PRICE;         # 値下げ価格
+
+
+    __nCheapestPrice    : int       = 0;                        # 最安値の設定値
     
+
     
     #! Getter
     def getPriceCut(self) ->  int:
         """
          @detail        値下げ価格の取得
         """
-        return self.__m_nPriceCut;
+        return self.__nPriceCut;
     
     def getCheapestPrice(self) ->  int:
         """
          @detail        最安値の取得
         """
-        return self.__m_nCheapestPrice;
+        return self.__nCheapestPrice;
     
     
     #! Setter
